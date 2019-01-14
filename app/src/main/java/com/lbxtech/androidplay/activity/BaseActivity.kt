@@ -2,7 +2,7 @@ package com.lbxtech.androidplay.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.lbxtech.androidplay.utils.AppManager
+import com.lbxtech.androidplay.app.AppManager
 
 open class BaseActivity : AppCompatActivity() {
 

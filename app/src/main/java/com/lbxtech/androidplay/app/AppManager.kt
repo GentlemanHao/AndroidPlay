@@ -1,4 +1,4 @@
-package com.lbxtech.androidplay.utils
+package com.lbxtech.androidplay.app
 
 import android.app.Activity
 import android.app.ActivityManager
