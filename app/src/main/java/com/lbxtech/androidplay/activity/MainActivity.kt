@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.TextView
 import com.lbxtech.androidplay.R
 import com.lbxtech.androidplay.bean.Banner
-import com.lbxtech.androidplay.comm.BindView
-import com.lbxtech.androidplay.comm.BindViewImp
+import com.lbxtech.androidplay.base.BindView
+import com.lbxtech.androidplay.base.initBindView
 import com.lbxtech.androidplay.presenter.MainPresenter
 import com.lbxtech.androidplay.view.MainView
 
@@ -19,7 +19,7 @@ class MainActivity : MvpActivity<MainPresenter>(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        BindViewImp.initBindView(this)
+        initBindView(this)
 
         mPresenter = MainPresenter()
         mPresenter.mView = this
