@@ -3,7 +3,7 @@ package com.lbxtech.androidplay.activity
 import com.lbxtech.androidplay.presenter.BasePresenter
 import com.lbxtech.androidplay.view.BaseView
 
-open class MvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView {
+abstract class MvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView {
 
     lateinit var mPresenter: T
 
