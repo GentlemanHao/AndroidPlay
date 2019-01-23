@@ -1,37 +1,13 @@
 package com.lbxtech.androidplay.activity
 
-import android.util.Log
-import android.widget.TextView
 import com.lbxtech.androidplay.R
-import com.lbxtech.androidplay.bean.Banner
-import com.lbxtech.androidplay.base.BindView
-import com.lbxtech.androidplay.presenter.MainPresenter
-import com.lbxtech.androidplay.view.MainView
+import com.lbxtech.androidplay.fragment.HomeFragment
 
-class MainActivity : MvpActivity<MainPresenter>(), MainView {
-
-    @BindView(R.id.tv_main)
-    private var tvMain: TextView? = null
-
-    private var time = 0
+class MainActivity : BaseActivity() {
 
     override fun getLayoutId() = R.layout.activity_main
 
     override fun onBindView() {
-        mPresenter = MainPresenter()
-        mPresenter.mView = this
-        mPresenter.getBanner()
-
-        tvMain?.setOnClickListener {
-            mPresenter.getBanner()
-        }
-    }
-
-    override fun onBannerResult(bannerList: List<Banner>) {
-        Log.d("--wh--", "$tvMain")
-        tvMain?.text = "onBannerResult ${time++}"
-        bannerList.forEach {
-            Log.d("--wh--", it.title)
-        }
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_content, HomeFragment()).commit()
     }
 }
