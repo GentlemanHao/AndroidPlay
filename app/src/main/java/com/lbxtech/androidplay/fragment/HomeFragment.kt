@@ -12,7 +12,7 @@ class HomeFragment : BaseFragment() {
 
     override fun getLayoutId() = R.layout.fragment_home
 
-    override fun bindView() {
+    override fun onBindView() {
         Log.d("--wh--", "bannerView:$bannerView")
     }
 

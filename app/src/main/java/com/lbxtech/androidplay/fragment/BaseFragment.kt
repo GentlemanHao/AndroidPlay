@@ -15,10 +15,10 @@ abstract class BaseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        bindView()
+        onBindView()
     }
 
     abstract fun getLayoutId(): Int
 
-    abstract fun bindView()
+    abstract fun onBindView()
 }

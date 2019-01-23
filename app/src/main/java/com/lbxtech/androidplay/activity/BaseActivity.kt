@@ -13,14 +13,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
         initBindView(this)
 
-        bindView()
+        onBindView()
 
         AppManager.instence.addActivity(this)
     }
 
     abstract fun getLayoutId(): Int
 
-    abstract fun bindView()
+    abstract fun onBindView()
 
     override fun onDestroy() {
         super.onDestroy()

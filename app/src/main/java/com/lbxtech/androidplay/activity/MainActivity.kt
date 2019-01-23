@@ -17,7 +17,7 @@ class MainActivity : MvpActivity<MainPresenter>(), MainView {
 
     override fun getLayoutId() = R.layout.activity_main
 
-    override fun bindView() {
+    override fun onBindView() {
         mPresenter = MainPresenter()
         mPresenter.mView = this
         mPresenter.getBanner()
