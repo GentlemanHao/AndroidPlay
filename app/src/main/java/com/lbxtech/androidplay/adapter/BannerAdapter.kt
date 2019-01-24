@@ -17,9 +17,11 @@ class BannerAdapter(private val list: List<Banner>) : BaseAdapter<Banner>(list) 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         (holder as ViewHolder).apply {
-            GlideUtil.load(list[position].imagePath, ivBanner)
+            GlideUtil.load(list[position % list.size].imagePath, ivBanner)
         }
     }
+
+    override fun getItemCount() = Int.MAX_VALUE
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivBanner = itemView.findViewById<XImageView>(R.id.iv_banner)
