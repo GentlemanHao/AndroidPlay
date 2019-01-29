@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.lbxtech.androidplay.app.AppManager
 import com.lbxtech.androidplay.base.initBindView
+import com.lbxtech.androidplay.utils.PermissionUtil
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -28,4 +29,8 @@ abstract class BaseActivity : AppCompatActivity() {
         AppManager.instence.finishActivity(this)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionUtil.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 }
