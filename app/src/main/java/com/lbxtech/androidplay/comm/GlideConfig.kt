@@ -14,7 +14,7 @@ class GlideConfig : AppGlideModule() {
         val memoryCache: Long = 1024 * 1024 * 10
         val diskCache: Long = 1024 * 1024 * 60
         builder.setMemoryCache(LruResourceCache(memoryCache))
-            .setDiskCache(InternalCacheDiskCacheFactory(context, diskCache))
+                .setDiskCache(InternalCacheDiskCacheFactory(context, diskCache))
     }
 
     override fun isManifestParsingEnabled(): Boolean {

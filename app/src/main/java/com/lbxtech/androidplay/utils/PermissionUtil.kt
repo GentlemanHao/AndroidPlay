@@ -11,12 +11,7 @@ object PermissionUtil {
     private var permissionCallBack: ((Boolean) -> Unit)? = null
     private var mRequestCode = -1
 
-    fun requestPermissions(
-        activity: Activity,
-        requestCode: Int,
-        permissions: Array<String>,
-        callback: (success: Boolean) -> Unit
-    ) {
+    fun requestPermissions(activity: Activity, requestCode: Int, permissions: Array<String>, callback: (success: Boolean) -> Unit) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             callback.invoke(true)
             return

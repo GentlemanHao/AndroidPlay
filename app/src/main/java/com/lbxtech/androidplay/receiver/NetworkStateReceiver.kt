@@ -7,7 +7,7 @@ import android.net.ConnectivityManager
 
 class NetworkStateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ConnectivityManager.CONNECTIVITY_ACTION){
+        if (intent.action == ConnectivityManager.CONNECTIVITY_ACTION) {
 
         }
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.lbxtech.androidplay.app.App
 
-
 object NetworkUtil {
     fun isNetworkConnected(): Boolean {
         val connectivityManager = App.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
