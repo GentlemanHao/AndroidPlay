@@ -1,12 +1,17 @@
 package com.lbxtech.androidplay.activity
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.lbxtech.androidplay.app.AppManager
 import com.lbxtech.androidplay.base.initBindView
+import com.lbxtech.androidplay.receiver.NetworkStateReceiver
 import com.lbxtech.androidplay.utils.PermissionUtil
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    private var networkStateReceiver: NetworkStateReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,12 +24,19 @@ abstract class BaseActivity : AppCompatActivity() {
         AppManager.instence.addActivity(this)
     }
 
+    protected fun registerNetworkReceiver() {
+        networkStateReceiver = NetworkStateReceiver()
+        registerReceiver(networkStateReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
+
     abstract fun getLayoutId(): Int
 
     abstract fun onBindView()
 
     override fun onDestroy() {
         super.onDestroy()
+
+        networkStateReceiver?.run { unregisterReceiver(this) }
 
         AppManager.instence.finishActivity(this)
     }
