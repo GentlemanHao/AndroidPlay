@@ -25,26 +25,18 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     override fun getItemCount() = list?.size ?: 0
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        bindView(holder as ViewHolder, position)
+        val list = list ?: return
+        val realPosition = if (position >= list.size) position % list.size else position
+        bindView(holder as ViewHolder, realPosition, list[realPosition])
     }
 
     abstract fun getLayoutId(): Int
 
-    abstract fun bindView(holder: ViewHolder, position: Int)
+    abstract fun bindView(holder: ViewHolder, position: Int, data: T)
 
     fun setData(list: List<T>) {
         this.list = list
         notifyDataSetChanged()
-    }
-
-    fun getData(position: Int): T? {
-        val list = list ?: return null
-
-        if (position < 0) return null
-
-        if (position > list.size) return list[position % list.size]
-
-        return list[position]
     }
 
     fun setOnItemClickListener(listener: (position: Int) -> Unit) {
