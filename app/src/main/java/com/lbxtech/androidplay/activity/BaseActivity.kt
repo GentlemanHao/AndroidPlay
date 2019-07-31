@@ -21,7 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         onBindView()
 
-        AppManager.instence.addActivity(this)
+        AppManager.instance.addActivity(this)
     }
 
     protected fun registerNetworkReceiver() {
@@ -38,7 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         networkStateReceiver?.run { unregisterReceiver(this) }
 
-        AppManager.instence.finishActivity(this)
+        AppManager.instance.finishActivity(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -3,7 +3,6 @@ package com.lbxtech.androidplay.fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.lbxtech.androidplay.base.BindView
 import com.lbxtech.androidplay.R
 import com.lbxtech.androidplay.adapter.BannerAdapter
@@ -30,9 +29,6 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
     }
 
     override fun onBannerResult(bannerList: List<Banner>) {
-        bannerList.forEach {
-            Log.d("--wh--", "${it.title}  ${it.imagePath}")
-        }
         bannerView?.adapter = BannerAdapter(bannerList)
     }
 
