@@ -19,8 +19,11 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
 
     override fun onBindView() {
 
-        bannerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        PagerSnapHelper().attachToRecyclerView(bannerView)
+        bannerView?.run {
+            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+            adapter = BannerAdapter()
+            PagerSnapHelper().attachToRecyclerView(this)
+        }
 
         mPresenter = MainPresenter().apply {
             mView = this@HomeFragment
@@ -29,7 +32,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
     }
 
     override fun onBannerResult(bannerList: List<Banner>) {
-        bannerView?.adapter = BannerAdapter(bannerList)
+        (bannerView?.adapter as? BannerAdapter)?.setData(bannerList)
     }
 
 }

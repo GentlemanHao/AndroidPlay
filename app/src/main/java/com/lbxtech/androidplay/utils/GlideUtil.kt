@@ -6,7 +6,7 @@ import com.lbxtech.androidplay.comm.GlideApp
 
 object GlideUtil {
 
-    fun load(url: String, view: ImageView) {
+    fun load(url: String?, view: ImageView) {
         GlideApp.with(AppManager.instance.currentActivity()).load(url).into(view)
     }
 

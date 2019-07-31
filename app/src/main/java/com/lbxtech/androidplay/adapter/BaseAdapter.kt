@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-abstract class BaseAdapter<T>(private val list: List<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var list: List<T>? = null
 
     private var itemClickListener: ((Int) -> Unit)? = null
 
@@ -20,7 +22,7 @@ abstract class BaseAdapter<T>(private val list: List<T>) : RecyclerView.Adapter<
         return holder
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = list?.size ?: 0
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         bindView(holder as ViewHolder, position)
@@ -29,6 +31,21 @@ abstract class BaseAdapter<T>(private val list: List<T>) : RecyclerView.Adapter<
     abstract fun getLayoutId(): Int
 
     abstract fun bindView(holder: ViewHolder, position: Int)
+
+    fun setData(list: List<T>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
+
+    fun getData(position: Int): T? {
+        val list = list ?: return null
+
+        if (position < 0) return null
+
+        if (position > list.size) return list[position % list.size]
+
+        return list[position]
+    }
 
     fun setOnItemClickListener(listener: (position: Int) -> Unit) {
         this.itemClickListener = listener
