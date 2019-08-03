@@ -22,8 +22,8 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
         bannerView?.run {
             layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
             adapter = BannerAdapter()
-            PagerSnapHelper().attachToRecyclerView(this)
         }
+        PagerSnapHelper().attachToRecyclerView(bannerView)
 
         mPresenter = MainPresenter().apply {
             mView = this@HomeFragment
