@@ -2,6 +2,7 @@ package com.lbxtech.androidplay.utils.http
 
 import java.io.BufferedOutputStream
 import java.lang.Exception
+import java.lang.RuntimeException
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -52,7 +53,7 @@ class JsonHttpRequest : IHttpRequest {
 
             }
         } catch (e: Exception) {
-
+            throw RuntimeException("$url   fail catch")
         } finally {
             httpConnection?.disconnect()
         }
