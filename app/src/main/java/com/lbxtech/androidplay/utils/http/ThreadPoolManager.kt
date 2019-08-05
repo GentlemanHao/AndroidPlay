@@ -6,7 +6,7 @@ object ThreadPoolManager {
 
     private val workQueue = LinkedBlockingDeque<Runnable>()
 
-    private val delayQueue = DelayQueue<HttpTask<*>>()
+    private val delayQueue = DelayQueue<HttpTask<*, *>>()
 
     private val threadPoolExecutor = ThreadPoolExecutor(3, 10, 15, TimeUnit.SECONDS,
         ArrayBlockingQueue<Runnable>(4), RejectedExecutionHandler { runnable, _ ->
@@ -38,7 +38,7 @@ object ThreadPoolManager {
         workQueue.add(runnable)
     }
 
-    fun addDelayTask(task: HttpTask<*>) {
+    fun addDelayTask(task: HttpTask<*, *>) {
         task.setDelayTime(5000L)
         delayQueue.offer(task)
     }

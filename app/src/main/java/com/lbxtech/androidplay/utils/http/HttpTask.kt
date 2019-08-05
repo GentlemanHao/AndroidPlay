@@ -5,7 +5,7 @@ import java.lang.Exception
 import java.util.concurrent.Delayed
 import java.util.concurrent.TimeUnit
 
-class HttpTask<T>(url: String, requestData: T, private val httpRequest: IHttpRequest, listener: CallbackListener) : Runnable, Delayed {
+class HttpTask<T, M>(url: String, requestData: T, responseData: Class<M>, private val httpRequest: IHttpRequest<M>, callback: Callback<M>) : Runnable, Delayed {
 
     private var delayTime: Long = 0
 
@@ -13,8 +13,9 @@ class HttpTask<T>(url: String, requestData: T, private val httpRequest: IHttpReq
 
     init {
         httpRequest.setUrl(url)
-        httpRequest.setListener(listener)
+        httpRequest.setCallback(callback)
         httpRequest.setData(XGson.toJson(requestData).toByteArray(Charsets.UTF_8))
+        httpRequest.setClass(responseData)
     }
 
     override fun run() {
