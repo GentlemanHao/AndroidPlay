@@ -3,7 +3,7 @@ package com.lbxtech.androidplay.activity
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.lbxtech.androidplay.app.AppManager
 import com.lbxtech.androidplay.base.initBindView
 import com.lbxtech.androidplay.receiver.NetworkStateReceiver

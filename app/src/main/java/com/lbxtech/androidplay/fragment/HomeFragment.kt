@@ -1,8 +1,6 @@
 package com.lbxtech.androidplay.fragment
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.PagerSnapHelper
-import android.support.v7.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.lbxtech.androidplay.base.BindView
 import com.lbxtech.androidplay.R
 import com.lbxtech.androidplay.adapter.BannerAdapter
@@ -12,19 +10,14 @@ import com.lbxtech.androidplay.view.MainView
 
 class HomeFragment : MvpFragment<MainPresenter>(), MainView {
 
-    @BindView(R.id.rv_banner)
-    private var bannerView: RecyclerView? = null
+    @BindView(R.id.vp_banner)
+    private var viewPager: ViewPager2? = null
 
     override fun getLayoutId() = R.layout.fragment_home
 
     override fun onBindView() {
 
-        bannerView?.run {
-            layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-            adapter = BannerAdapter()
-            onFlingListener = null
-            PagerSnapHelper().attachToRecyclerView(bannerView)
-        }
+        viewPager?.adapter = BannerAdapter()
 
         mPresenter = MainPresenter().apply {
             mView = this@HomeFragment
@@ -33,7 +26,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
     }
 
     override fun onBannerResult(bannerList: List<Banner>) {
-        (bannerView?.adapter as? BannerAdapter)?.setData(bannerList)
+        (viewPager?.adapter as? BannerAdapter)?.setData(bannerList)
     }
 
 }

@@ -8,7 +8,7 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_main
 
     override fun onBindView() {
-        registerNetworkReceiver()
+        //registerNetworkReceiver()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_content, HomeFragment()).commit()
     }
 }

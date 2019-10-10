@@ -1,7 +1,7 @@
 package com.lbxtech.androidplay.base
 
 import android.app.Activity
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 
 @kotlin.annotation.Target(AnnotationTarget.FIELD)
