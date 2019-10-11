@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.lbxtech.androidplay.R
+import kotlin.math.min
 
 class XImageView : ImageView {
 
@@ -38,7 +39,7 @@ class XImageView : ImageView {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         if (currentStyle == TYPE_CIRCLE) {
-            val min = Math.min(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
+            val min = min(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
             setMeasuredDimension(min, min)
         }
         rectF.set(0f, 0f, width.toFloat(), height.toFloat())
