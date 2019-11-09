@@ -5,6 +5,7 @@ import com.lbxtech.androidplay.base.BindView
 import com.lbxtech.androidplay.R
 import com.lbxtech.androidplay.adapter.BannerAdapter
 import com.lbxtech.androidplay.adapter.HomeAdapter
+import com.lbxtech.androidplay.bean.Article
 import com.lbxtech.androidplay.bean.Banner
 import com.lbxtech.androidplay.bean.HomeData
 import com.lbxtech.androidplay.presenter.MainPresenter
@@ -14,9 +15,7 @@ import com.lbxtech.androidplay.widget.XRecyclerView
 class HomeFragment : MvpFragment<MainPresenter>(), MainView {
 
     @BindView(R.id.rv_home)
-    private var rvHome: XRecyclerView? = null
-
-    private val homeAdapter by lazy { HomeAdapter() }
+    private var rvHome: XRecyclerView<Article>? = null
 
     private val bannerAdapter by lazy { BannerAdapter() }
 
@@ -29,7 +28,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
 
         rvHome?.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = homeAdapter
+            adapter = HomeAdapter()
         }
 
         mPresenter = MainPresenter().apply {
@@ -44,8 +43,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
     }
 
     override fun onHomeDataResult(data: HomeData) {
-        homeAdapter.setData(data.datas)
-        rvHome?.notifyDataSetChanged()
+        rvHome?.setData(data.datas)
     }
 
 }

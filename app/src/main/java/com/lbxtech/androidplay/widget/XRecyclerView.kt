@@ -4,13 +4,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.lbxtech.androidplay.adapter.BaseAdapter
 import com.lbxtech.androidplay.adapter.WrapRecyclerAdapter
 
-class XRecyclerView : RecyclerView {
+class XRecyclerView<T> : RecyclerView {
 
     private var wrapRecyclerAdapter: WrapRecyclerAdapter? = null
 
-    private var baseAdapter: Adapter<ViewHolder>? = null
+    private var baseAdapter: BaseAdapter<T>? = null
 
     constructor(context: Context) : super(context)
 
@@ -20,7 +21,7 @@ class XRecyclerView : RecyclerView {
 
     override fun setAdapter(adapter: Adapter<ViewHolder>?) {
         adapter ?: return
-        baseAdapter = adapter
+        baseAdapter = adapter as BaseAdapter<T>
         wrapRecyclerAdapter = WrapRecyclerAdapter(adapter)
         super.setAdapter(wrapRecyclerAdapter)
     }
@@ -35,7 +36,8 @@ class XRecyclerView : RecyclerView {
         wrapRecyclerAdapter?.addFooterView(view)
     }
 
-    fun notifyDataSetChanged() {
-        baseAdapter?.notifyDataSetChanged()
+    fun setData(list: List<T>) {
+        baseAdapter?.setData(list)
+        wrapRecyclerAdapter?.notifyDataSetChanged()
     }
 }
