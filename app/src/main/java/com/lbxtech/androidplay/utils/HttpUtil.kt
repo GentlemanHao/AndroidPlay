@@ -17,31 +17,31 @@ object HttpUtil {
 
     private fun initOkHttp(): OkHttpClient {
         return OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .cache(Cache(File("${Environment.getExternalStorageDirectory()}/AndroidPlay/Cache/"), 10 * 1024 * 1024))
-                .addInterceptor(getOfflineCacheInterceptor())
-                .addNetworkInterceptor(getNetCacheInterceptor())
-                .build()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .cache(Cache(File("${Environment.getExternalStorageDirectory()}/AndroidPlay/Cache/"), 10 * 1024 * 1024))
+            .addInterceptor(getOfflineCacheInterceptor())
+            .addNetworkInterceptor(getNetCacheInterceptor())
+            .build()
     }
 
     private fun initRetrofit() = Retrofit.Builder()
-            .baseUrl("http://wanandroid.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .build()
-            .create(ApiServer::class.java)
+        .baseUrl("https://www.wanandroid.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(okHttpClient)
+        .build()
+        .create(ApiServer::class.java)
 
 
     private fun getNetCacheInterceptor() = Interceptor { chain ->
         val response = chain.proceed(chain.request())
         val cacheTime = 60
         response.newBuilder()
-                .header("Cache-Control", "public, max-age=$cacheTime")
-                .removeHeader("Pragma")
-                .build()
+            .header("Cache-Control", "public, max-age=$cacheTime")
+            .removeHeader("Pragma")
+            .build()
     }
 
     private fun getOfflineCacheInterceptor() = Interceptor { chain ->
@@ -49,8 +49,8 @@ object HttpUtil {
         if (!NetworkUtil.isNetworkConnected()) {
             val cacheTime = 600
             request = request.newBuilder()
-                    .header("Cache-Control", "public, only-if-cached, max-stale=$cacheTime")
-                    .build()
+                .header("Cache-Control", "public, only-if-cached, max-stale=$cacheTime")
+                .build()
         }
         chain.proceed(request)
     }
