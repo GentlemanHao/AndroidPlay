@@ -9,14 +9,14 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     private var list: List<T>? = null
 
-    private var itemClickListener: ((Int) -> Unit)? = null
+    private var itemClickListener: ((position: Int, data: T?) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(getLayoutId(), parent, false)
         val holder = ViewHolder(itemView)
         if (itemClickListener != null) {
             holder.itemView.setOnClickListener {
-                itemClickListener!!.invoke(holder.layoutPosition)
+                itemClickListener!!.invoke(holder.layoutPosition, list?.get(holder.layoutPosition))
             }
         }
         return holder
@@ -39,7 +39,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         notifyDataSetChanged()
     }
 
-    fun setOnItemClickListener(listener: (position: Int) -> Unit) {
+    fun setOnItemClickListener(listener: (position: Int, data: T?) -> Unit) {
         this.itemClickListener = listener
     }
 

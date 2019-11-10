@@ -1,8 +1,10 @@
 package com.lbxtech.androidplay.fragment
 
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbxtech.androidplay.base.BindView
 import com.lbxtech.androidplay.R
+import com.lbxtech.androidplay.activity.ArticleActivity
 import com.lbxtech.androidplay.adapter.BannerAdapter
 import com.lbxtech.androidplay.adapter.HomeAdapter
 import com.lbxtech.androidplay.bean.Article
@@ -28,7 +30,13 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
 
         rvHome?.run {
             layoutManager = LinearLayoutManager(context)
-            adapter = HomeAdapter()
+            adapter = HomeAdapter().apply {
+                setOnItemClickListener { _, data ->
+                    val intent = Intent(activity, ArticleActivity::class.java)
+                    intent.putExtra("link", data?.link)
+                    activity?.startActivity(intent)
+                }
+            }
         }
 
         mPresenter = MainPresenter().apply {
