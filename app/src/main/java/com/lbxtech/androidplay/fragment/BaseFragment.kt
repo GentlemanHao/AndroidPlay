@@ -12,7 +12,9 @@ abstract class BaseFragment : Fragment() {
     protected lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(getLayoutId(), container, false)
+        rootView = if (getLayoutId() != 0) {
+            inflater.inflate(getLayoutId(), container, false)
+        } else initCustomLayout()!!
         return rootView
     }
 
@@ -24,7 +26,11 @@ abstract class BaseFragment : Fragment() {
         onBindView()
     }
 
-    abstract fun getLayoutId(): Int
+    open fun getLayoutId() = 0
+
+    open fun initCustomLayout(): View? {
+        return null
+    }
 
     abstract fun onBindView()
 }
