@@ -1,6 +1,6 @@
 package com.lbxtech.androidplay.activity
 
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.lbxtech.androidplay.R
@@ -12,7 +12,7 @@ import com.lbxtech.androidplay.fragment.OtherFragment
 class MainActivity : BaseActivity() {
 
     @BindView(R.id.fragment_content)
-    private var viewPager: ViewPager? = null
+    private var viewPager: ViewPager2? = null
 
     @BindView(R.id.home_navigation)
     private var bottomNavigationView: BottomNavigationView? = null
@@ -22,22 +22,13 @@ class MainActivity : BaseActivity() {
     override fun onBindView() {
         val list = arrayListOf(HomeFragment(), OtherFragment(), OtherFragment(), OtherFragment())
         viewPager?.run {
-            adapter = HomePagerAdapter(supportFragmentManager, list)
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {
-
-                }
-
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-                }
-
+            adapter = HomePagerAdapter(this@MainActivity, list)
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     bottomNavigationView?.run {
                         selectedItemId = menu.getItem(position).itemId
                     }
                 }
-
             })
         }
 
