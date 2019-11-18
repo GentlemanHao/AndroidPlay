@@ -12,6 +12,4 @@ class BannerAdapter : BaseAdapter<Banner>() {
     override fun bindView(holder: ViewHolder, position: Int, data: Banner) {
         GlideUtil.load(data.imagePath, holder.findView<XImageView>(R.id.iv_banner))
     }
-
-    override fun getItemCount() = Int.MAX_VALUE
 }

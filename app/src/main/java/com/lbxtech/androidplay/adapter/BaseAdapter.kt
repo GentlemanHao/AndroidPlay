@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lbxtech.androidplay.widget.XRecyclerView
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -16,7 +17,9 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         val holder = ViewHolder(itemView)
         if (itemClickListener != null) {
             holder.itemView.setOnClickListener {
-                itemClickListener!!.invoke(holder.layoutPosition, list?.get(holder.layoutPosition))
+                val itemCount = (parent as XRecyclerView<*>).adapter?.itemCount ?: 0
+                val realPosition = if (itemCount > getItemCount()) holder.layoutPosition - (itemCount - getItemCount()) else holder.layoutPosition
+                itemClickListener!!.invoke(realPosition, list?.get(realPosition))
             }
         }
         return holder
