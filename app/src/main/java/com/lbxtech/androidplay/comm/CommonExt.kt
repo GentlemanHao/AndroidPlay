@@ -1,5 +1,6 @@
 package com.lbxtech.androidplay.comm
 
+import android.view.View
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,4 +20,16 @@ fun String.Md5Encoder(): String {
         sb.append(hexString)
     }
     return sb.toString()
+}
+
+fun View.hide() {
+    if (visibility == View.VISIBLE) {
+        visibility = View.GONE
+    }
+}
+
+fun View.show() {
+    if (visibility != View.VISIBLE) {
+        visibility = View.VISIBLE
+    }
 }

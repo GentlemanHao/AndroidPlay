@@ -1,7 +1,6 @@
 package com.lbxtech.androidplay.fragment
 
 import android.content.Intent
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +50,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
                 }
             }
 
-            addHeaderView(viewPager)
+            setHeaderView(viewPager)
         }
 
         mPresenter = MainPresenter().apply {
@@ -62,12 +61,11 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
     }
 
     override fun onBannerResult(bannerList: List<Banner>) {
-        Log.d("--wh--", "bannerList: $bannerList")
         bannerAdapter.setData(bannerList)
     }
 
     override fun onHomeDataResult(data: HomeData) {
-        rvHome?.setData(data.datas)
+        rvHome?.setData(data.datas, data.pageCount < data.curPage)
     }
 
 }

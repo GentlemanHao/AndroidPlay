@@ -4,41 +4,74 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lbxtech.androidplay.widget.XRecyclerView
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var list: List<T>? = null
+    private val HEADER = -1
+    private val CONTENT = 0
+    private val FOOTER = 1
+    private var headerView: View? = null
+    private var footerView: View? = null
+
+    private val data by lazy { ArrayList<T>() }
 
     private var itemClickListener: ((position: Int, data: T?) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(getLayoutId(), parent, false)
-        val holder = ViewHolder(itemView)
-        if (itemClickListener != null) {
-            holder.itemView.setOnClickListener {
-                val itemCount = (parent as XRecyclerView<*>).adapter?.itemCount ?: 0
-                val realPosition = if (itemCount > getItemCount()) holder.layoutPosition - (itemCount - getItemCount()) else holder.layoutPosition
-                itemClickListener!!.invoke(realPosition, list?.get(realPosition))
-            }
+    override fun getItemViewType(position: Int): Int {
+        if (position == 0 && headerViewSize() > 0) {
+            return HEADER
         }
-        return holder
+
+        if (data.size > 0 && position < data.size + headerViewSize()) {
+            return CONTENT
+        }
+
+        return FOOTER
     }
 
-    override fun getItemCount() = list?.size ?: 0
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HEADER -> HeaderHolder(headerView!!)
+
+            CONTENT -> {
+                val itemView =
+                    LayoutInflater.from(parent.context).inflate(getLayoutId(), parent, false)
+                val holder = ViewHolder(itemView)
+                if (itemClickListener != null) {
+                    holder.itemView.setOnClickListener {
+                        val realPosition = holder.layoutPosition - headerViewSize()
+                        itemClickListener!!.invoke(realPosition, data[realPosition])
+                    }
+                }
+                return holder
+            }
+
+            else -> FooterHolder(footerView!!)
+        }
+    }
+
+    override fun getItemCount() = data.size + headerViewSize() + footerViewSize()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val list = list ?: return
-        val realPosition = if (position >= list.size) position % list.size else position
-        bindView(holder as ViewHolder, realPosition, list[realPosition])
+        when (holder) {
+            is HeaderHolder -> {
+            }
+            is FooterHolder -> {
+            }
+            is ViewHolder -> {
+                val realPosition = position - headerViewSize()
+                bindView(holder, realPosition, data[realPosition])
+            }
+        }
     }
 
     abstract fun getLayoutId(): Int
 
     abstract fun bindView(holder: ViewHolder, position: Int, data: T)
 
-    fun setData(list: List<T>) {
-        this.list = list
+    fun setData(list: List<T>, append: Boolean = true) {
+        if (!append) data.clear()
+        data.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -46,10 +79,28 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         this.itemClickListener = listener
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun setHeaderView(view: View?) {
+        headerView = view
+        notifyDataSetChanged()
+    }
+
+    fun setFooterView(view: View?) {
+        footerView = view
+        notifyDataSetChanged()
+    }
+
+    private fun headerViewSize() = if (headerView == null) 0 else 1
+
+    private fun footerViewSize() = if (footerView == null) 0 else 1
+
+    open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun <T : View> findView(id: Int): T {
             return itemView.findViewById(id)
         }
     }
+
+    class HeaderHolder(itemView: View) : ViewHolder(itemView)
+
+    class FooterHolder(itemView: View) : ViewHolder(itemView)
 }

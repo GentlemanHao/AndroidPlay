@@ -5,13 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.lbxtech.androidplay.adapter.BaseAdapter
-import com.lbxtech.androidplay.adapter.WrapRecyclerAdapter
 
 class XRecyclerView<T> : RecyclerView {
-
-    private var wrapRecyclerAdapter: WrapRecyclerAdapter? = null
-
-    private var baseAdapter: BaseAdapter<T>? = null
 
     constructor(context: Context) : super(context)
 
@@ -19,25 +14,21 @@ class XRecyclerView<T> : RecyclerView {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun setAdapter(adapter: Adapter<ViewHolder>?) {
-        adapter ?: return
-        baseAdapter = adapter as BaseAdapter<T>
-        wrapRecyclerAdapter = WrapRecyclerAdapter(adapter)
-        super.setAdapter(wrapRecyclerAdapter)
+    fun setHeaderView(view: View?) {
+        getBaseAdapter()?.setHeaderView(view)
     }
 
-    fun addHeaderView(view: View?) {
-        view ?: return
-        wrapRecyclerAdapter?.addHeaderView(view)
+    fun setFooterView(view: View?) {
+        getBaseAdapter()?.setFooterView(view)
     }
 
-    fun addFooterView(view: View?) {
-        view ?: return
-        wrapRecyclerAdapter?.addFooterView(view)
+    fun enableLoadMore() {
+
     }
 
-    fun setData(list: List<T>) {
-        baseAdapter?.setData(list)
-        wrapRecyclerAdapter?.notifyDataSetChanged()
+    fun setData(list: List<T>, append: Boolean) {
+        getBaseAdapter()?.setData(list, append)
     }
+
+    private fun getBaseAdapter() = adapter as? BaseAdapter<T>
 }
