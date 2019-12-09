@@ -51,6 +51,7 @@ class HomeFragment : MvpFragment<MainPresenter>(), MainView {
             }
 
             setHeaderView(viewPager)
+            enableLoadMore()
         }
 
         mPresenter = MainPresenter().apply {

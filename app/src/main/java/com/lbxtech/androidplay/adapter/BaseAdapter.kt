@@ -1,9 +1,14 @@
 package com.lbxtech.androidplay.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.lbxtech.androidplay.R
+import com.lbxtech.androidplay.comm.hide
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -57,6 +62,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             is HeaderHolder -> {
             }
             is FooterHolder -> {
+                holder.message.text = "Loading"
             }
             is ViewHolder -> {
                 val realPosition = position - headerViewSize()
@@ -93,6 +99,12 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     private fun footerViewSize() = if (footerView == null) 0 else 1
 
+    fun enableLoadMore(context: Context) {
+        footerView = LayoutInflater.from(context).inflate(R.layout.layout_lode_more, null).apply {
+            layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+    }
+
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun <T : View> findView(id: Int): T {
@@ -102,5 +114,13 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     class HeaderHolder(itemView: View) : ViewHolder(itemView)
 
-    class FooterHolder(itemView: View) : ViewHolder(itemView)
+    class FooterHolder(itemView: View) : ViewHolder(itemView) {
+        val progressBar = findView<ProgressBar>(R.id.pb_loading)
+        val message = findView<TextView>(R.id.tv_load)
+
+        init {
+            progressBar.hide()
+            message.hide()
+        }
+    }
 }

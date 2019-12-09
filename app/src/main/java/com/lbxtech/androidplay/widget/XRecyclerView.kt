@@ -23,7 +23,7 @@ class XRecyclerView<T> : RecyclerView {
     }
 
     fun enableLoadMore() {
-
+        getBaseAdapter()?.enableLoadMore(context)
     }
 
     fun setData(list: List<T>, append: Boolean) {
