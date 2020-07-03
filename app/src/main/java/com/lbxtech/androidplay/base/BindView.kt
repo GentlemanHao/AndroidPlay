@@ -9,25 +9,25 @@ import android.view.View
 annotation class BindView(val value: Int)
 
 fun initBindView(activity: Activity) {
-    val clazz = activity.javaClass
-    for (field in clazz.declaredFields) {
-        val bindView = field.getAnnotation(BindView::class.java)
-        if (bindView != null) {
-            val view = activity.findViewById<View>(bindView.value)
-            field.isAccessible = true
-            field.set(activity, view)
-        }
-    }
+    bindView(activity)
 }
 
-fun initBindView(fragment: Fragment, rootView: View) {
-    val clazz = fragment.javaClass
-    for (field in clazz.declaredFields) {
-        val bindView = field.getAnnotation(BindView::class.java)
-        if (bindView != null) {
-            val view = rootView.findViewById<View>(bindView.value)
-            field.isAccessible = true
-            field.set(fragment, view)
-        }
+fun initBindView(fragment: Fragment) {
+    bindView(fragment)
+}
+
+private fun bindView(context: Any) {
+    val clazz = context.javaClass
+    clazz.declaredFields.forEach { field ->
+        val annotation = field.getAnnotation(BindView::class.java) ?: return@forEach
+
+        val view = when (context) {
+            is Activity -> context.findViewById<View>(annotation.value)
+            is Fragment -> context.view?.findViewById<View>(annotation.value)
+            else -> null
+        } ?: return@forEach
+
+        field.isAccessible = true
+        field.set(context, view)
     }
 }

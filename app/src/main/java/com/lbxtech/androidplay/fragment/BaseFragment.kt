@@ -21,7 +21,7 @@ abstract class BaseFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        initBindView(this, rootView)
+        initBindView(this)
 
         onBindView()
     }
