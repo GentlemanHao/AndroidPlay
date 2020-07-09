@@ -123,7 +123,7 @@
             android:exported="true"
             android:process=":channel">
             <intent-filter>
-                <action android:name="com.lbxtech.androidplay.intent.action.COMMAND" />
+                <action android:name="${applicationId}.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -172,7 +172,7 @@
 
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
-            android:authorities="com.lbxtech.androidplay.umeng.message"
+            android:authorities="${applicationId}.umeng.message"
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
