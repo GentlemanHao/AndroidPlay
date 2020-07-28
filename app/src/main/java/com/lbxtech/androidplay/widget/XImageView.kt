@@ -3,11 +3,11 @@ package com.lbxtech.androidplay.widget
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import com.lbxtech.androidplay.R
 import kotlin.math.min
 
-class XImageView : ImageView {
+class XImageView : AppCompatImageView {
 
     private var currentStyle = 0
     private var radius = 0f
